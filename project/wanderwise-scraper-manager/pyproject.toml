@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "wanderwise-scraper-manager"
+version = "0.1.0"
+description = "wanderwise scraper manager"
+authors = ["wiratana <andikawiratana@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+deep-translator = "^1.11.4"
+fastapi = "^0.104.1"
+uvicorn = "^0.24.0.post1"
+transformers = "^4.36.0"
+torch = "^2.1.1"
+tensorflow = {version = "2.15.0", python = ">=3.10,<3.11"}
+python-dotenv = "^1.0.0"
+lxml = "^4.9.3"
+geonamescache = "^2.0.0"
+firebase-admin = "^6.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,51 @@
+# Test your FastAPI endpoints
+
+GET http://127.0.0.1:8000/
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/hello/User
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/test-summarization-model
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/test-classification-model
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/test-ner-model
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/process
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/detik-crime
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/firebase_test
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/weather_test
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/score_updater
+Accept: application/json
+
+###

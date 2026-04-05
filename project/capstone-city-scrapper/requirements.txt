@@ -1,0 +1,5 @@
+beautifulsoup4
+mongoengine
+python-dotenv
+selenium
+requests

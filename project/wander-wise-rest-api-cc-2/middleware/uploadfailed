@@ -1,0 +1,46 @@
+const util = require("util");
+const multer = require("multer");
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+const maxSize = 5 * 1024 * 1024;
+
+// Local Disk Storage Configuration
+const storageLocal = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __basedir + "/tmp");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+// Cloudinary Storage Configuration
+const storageCloudinary = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'uploads', // Specify the Cloudinary folder where you want to store files
+    format: async (req, file) => 'png,jgp,jpeg,JPG,JPEG,PNG', // Set the desired format (you can adjust this based on file type)
+  },
+});
+
+// Local Disk Storage Middleware
+const uploadFileLocalMiddleware = multer({
+  storage: storageLocal,
+  limits: { fileSize: maxSize },
+}).single("file");
+
+// Cloudinary Storage Middleware
+const uploadFileCloudinaryMiddleware = multer({
+  storage: storageCloudinary,
+}).single("file");
+
+// Promisify Middleware Functions
+const uploadFileLocal = util.promisify(uploadFileLocalMiddleware);
+const uploadFileCloudinary = util.promisify(uploadFileCloudinaryMiddleware);
+
+module.exports = {
+  uploadFileLocal,
+  uploadFileCloudinary,
+  upload: uploadFileCloudinary, // If you want to keep using the 'upload' alias for Cloudinary storage
+};

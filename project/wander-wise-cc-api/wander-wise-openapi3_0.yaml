@@ -1,0 +1,302 @@
+openapi: 3.0.0
+info:
+  title: Wander-Wise-API-1
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://wander-wise-api-1-7mqffet5fa-as.a.run.app/api/v1
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register User
+      description: >2+
+
+        This endpoint allows users to register by sending a POST request to the specified URL. The request should include the user's name, email, and password in the request body.
+
+
+        ### Request Body
+
+        - `name` (string, required): The name of the user.
+
+        - `email` (string, required): The email address of the user.
+
+        - `password` (string, required): The password for the user account.
+
+
+        ### Response
+
+        The endpoint returns a status code of 400 along with a message in the response body.
+
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisterUserRequest'
+              - example:
+                  name: haidil
+                  email: haidil@gmail.com
+                  password: secret
+            example:
+              name: haidil
+              email: haidil@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login User
+      description: "This endpoint is used to authenticate and login a user.\n\n### Request\n\n- Method: POST\n- URL: {{URL}}/auth/login\n- Payload Type: raw\n    \n\n#### Payload\n\n- username (string)\n- email (string)\n- password (string)\n    \n\n### Response\n\n- Status: 200\n- Body:\n    \n    ``` json\n    {\n        \"user\": {\n            \"name\": \"\"\n        },\n        \"token\": \"\"\n    }\n    \n     ```"
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginUserRequest'
+              - example:
+                  email: oreo@gmail.com
+                  password: secret
+            example:
+              email: oreo@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /posts:
+    post:
+      tags:
+      - Posts
+      summary: Create Post
+      operationId: CreatePost
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreatePostRequest'
+              - example:
+                  title: Post ketiga 3
+                  image: contoh image
+                  description: Percobaan ketiga post
+            example:
+              title: Post ketiga 3
+              image: contoh image
+              description: Percobaan ketiga post
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    get:
+      tags:
+      - Posts
+      summary: Get All Posts
+      operationId: GetAllPosts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+
+  /posts/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    patch:
+      tags:
+      - Posts
+      summary: Update Post
+      operationId: UpdatePost
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdatePostRequest'
+              - example:
+                  title: Post pertama (BARU DI EDIT)
+                  image: contoh image
+                  description: Percobaan pertama edited post
+            example:
+              title: Post pertama (BARU DI EDIT)
+              image: contoh image
+              description: Percobaan pertama edited post
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  
+    delete:
+      tags:
+      - Posts
+      summary: Delete Post
+      operationId: DeletePost
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /posts/home:
+    get:
+      tags:
+      - Posts
+      summary: Get All Post Users
+      operationId: GetAllPostUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /posts/uploads:
+    post:
+      tags:
+      - Posts
+      summary: Upload Image
+      operationId: UploadImage
+      parameters: []
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding: {}
+            schema:
+              required:
+              - image
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: haidil
+        email: haidil@gmail.com
+        password: secret
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: oreo@gmail.com
+        password: secret
+    CreatePostRequest:
+      title: CreatePostRequest
+      required:
+      - title
+      - image
+      - description
+      type: object
+      properties:
+        title:
+          type: string
+        image:
+          type: string
+        description:
+          type: string
+      example:
+        title: Post ketiga 3
+        image: contoh image
+        description: Percobaan ketiga post
+    UpdatePostRequest:
+      title: UpdatePostRequest
+      required:
+      - title
+      - image
+      - description
+      type: object
+      properties:
+        title:
+          type: string
+        image:
+          type: string
+        description:
+          type: string
+      example:
+        title: Post pertama (BARU DI EDIT)
+        image: contoh image
+        description: Percobaan pertama edited post
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Misc
+  description: ''
+- name: Auth
+  description: ''
+- name: Posts
+  description: ''
